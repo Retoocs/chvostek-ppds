@@ -25,6 +25,7 @@ def do_count(shared, mutex):
     Gets an object shared, that has a list of numbers and increments every element by one
 
     :param shared: an instance of class Shared
+    :param mutex: a global lock, which threads use
     :return: none
     """
     while True:
