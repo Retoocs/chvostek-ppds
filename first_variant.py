@@ -9,6 +9,7 @@ Assignment: https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostred
 
 from collection.Collection import Counter
 from fei.ppds import Thread
+from fei.ppds import Mutex
 
 class Shared():
     """
@@ -19,7 +20,7 @@ class Shared():
         self.end = size
         self.elms = [0] * size
 
-def do_count(shared):
+def do_count(shared, mutex):
     """
     Gets an object shared, that has a list of numbers and increments every element by one
 
@@ -27,16 +28,21 @@ def do_count(shared):
     :return: none
     """
     while True:
+        mutex.lock()
         if shared.counter >= shared.end:
+            mutex.unlock()
             break
         shared.elms[shared.counter] += 1
         shared.counter += 1
+        mutex.unlock()
 
-shared = Shared(1000000)
-t1 = Thread(do_count, shared)
-t2 = Thread(do_count, shared)
-t1.join()
-t2.join()
+if __name__ == "__main__":
+    mutex = Mutex()
+    shared = Shared(1000000)
+    t1 = Thread(do_count, shared, mutex)
+    t2 = Thread(do_count, shared, mutex)
+    t1.join()
+    t2.join()
 
-counter = Counter(shared.elms)
-print(counter.most_common())
+    counter = Counter(shared.elms)
+    print(counter.most_common())
