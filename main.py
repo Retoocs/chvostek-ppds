@@ -1,6 +1,5 @@
 """
-Authors: Mgr. Ing. Matúš Jókay, PhD.
-        Bc. Matej Chvostek
+Authors: Mgr. Ing. Matúš Jókay, PhD., Bc. Matej Chvostek
 University:  Slovak University of Technology in Bratislava
 Faculty: Faculty of Electrical Engineering and Information Technology
 Year: 2022
