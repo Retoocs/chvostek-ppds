@@ -1,3 +1,4 @@
+### Student: Matej Chvostek
 # Overview
 In this branch you can find my solutions for the first assignment. There are total of 3 solutions, each in one .py file. 
 Named:
