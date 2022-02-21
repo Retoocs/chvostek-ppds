@@ -19,7 +19,7 @@ The problem in this task is, that we should use 2 threads in this program. This 
 ## Notes
 Each solution was developed with **Python v3.8**.
 
-##Solutions
+## Solutions
 The idea behind each solution is to evaluate counter and element of array incrementations atomically.
 ### First solution (first_variant.py)
 In the first solution we lock the mutex inside the while loop, but before the condition. We lock it here, because if we don't do that and put the `mutex.lock()` after the condition, we'd get a problem:
