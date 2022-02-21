@@ -16,6 +16,10 @@ class Shared():
     Saves a list of number elements. Contains counter and size attribute
     """
     def __init__(self, size):
+        """
+        Initializes an instance of Shared
+        :param size: length of the attribute elms
+        """
         self.counter = 0
         self.end = size
         self.elms = [0] * size
@@ -38,8 +42,13 @@ def do_count(shared, mutex):
         mutex.unlock()
 
 if __name__ == "__main__":
+    """
+    The entry point of program. Creates a global lock and instance of class Shared
+    """
+    start = time.time()
+
     mutex = Mutex()
-    shared = Shared(1000000)
+    shared = Shared(10_000_000)
     t1 = Thread(do_count, shared, mutex)
     t2 = Thread(do_count, shared, mutex)
     t1.join()
