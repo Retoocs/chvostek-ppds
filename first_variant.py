@@ -6,6 +6,7 @@ Year: 2022
 License: MIT
 Assignment: https://uim.fei.stuba.sk/i-ppds/1-cvicenie-oboznamenie-sa-s-prostredim-%f0%9f%90%8d/
 """
+import time
 
 from collection.Collection import Counter
 from fei.ppds import Thread
@@ -56,3 +57,6 @@ if __name__ == "__main__":
 
     counter = Counter(shared.elms)
     print(counter.most_common())
+
+    end = time.time()
+    print('Elapsed time: ' + str(round(end - start, 8)) + " sec")
