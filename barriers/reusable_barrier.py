@@ -12,6 +12,7 @@ class SimpleBarrier:
         self.event = Event()
 
     def wait(self):
+        self.event.clear()
         self.mutex.lock()
         self.counter += 1
         if self.counter == self.numberOfThreads:
@@ -19,7 +20,6 @@ class SimpleBarrier:
             self.event.set()
         self.mutex.unlock()
         self.event.wait()
-        self.event.clear()
 
 def before_rendezvous(thread_name):
     print('%s: BEFORE rendezvous' % thread_name)
@@ -32,18 +32,21 @@ def critical_area(thread_name):
     print('%s: critical area' % thread_name)
     #sleep(randint(1, 10) / 10)
 
-def barrier_example(sb, thread_name):
-    ITERATIONS = 10
+def barrier_example(sb1, sb2, sb3, thread_name):
+    ITERATIONS = 5
     for i in range(ITERATIONS):
         before_rendezvous(thread_name)
-        sb.wait()
+        sb1.wait()
         rendezvous(thread_name)
-        sb.wait()
+        sb2.wait()
         critical_area(thread_name)
-        sb.wait()
+        sb3.wait()
 
 if __name__ == "__main__":
-    THREADS = 5
-    simpleBarrier = SimpleBarrier(THREADS)
-    threads = [Thread(barrier_example, simpleBarrier, 'Thread %d' % i) for i in range(THREADS)]
+    THREADS = 4
+    simpleBarrier1 = SimpleBarrier(THREADS)
+    simpleBarrier2 = SimpleBarrier(THREADS)
+    simpleBarrier3 = SimpleBarrier(THREADS)
+    threads = [Thread(barrier_example, simpleBarrier1, simpleBarrier2, simpleBarrier3,
+                      'Thread %d' % i) for i in range(THREADS)]
     [t.join() for t in threads]
