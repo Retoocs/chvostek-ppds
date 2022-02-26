@@ -1,37 +1,37 @@
 from random import randint
 from time import sleep
-from fei.ppds import Thread, Semaphore, Mutex
-
-"""Vypisovat na monitor budeme pomocou funkcie 'print'
-   importovanej z modulu 'ppds'.
-   To kvoli tomu, aby neboli 'rozbite' vypisy.
-"""
+from fei.ppds import Thread
+from fei.ppds import Mutex
+from fei.ppds import Event
 from fei.ppds import print
 
 
 class SimpleBarrier:
-    def __init__(self, N):
-        self.N = N
-        # ...
+    def __init__(self, n):
+        self.numberOfThreads = n
+        self.counter = 0
+        self.mutex = Mutex()
+        self.event = Event()
 
     def wait(self):
-        # ...
-        pass
+        self.mutex.lock()
+        self.counter += 1
+        if self.counter == self.numberOfThreads:
+            self.counter = 0
+            self.event.set()
+        self.mutex.unlock()
+        self.event.wait()
 
 
 def barrier_example(barrier, thread_id):
-    """Predpokladajme, ze nas program vytvara a spusta 5 vlakien,
-    ktore vykonavaju nasledovnu funkciu, ktorej argumentom je
-    zdielany objekt jednoduchej bariery
-    """
     sleep(randint(1, 10) / 10)
-    print("vlakno %d pred barierou" % thread_id)
+    print("Thread %d is BEFORE barrier" % thread_id)
     barrier.wait()
-    print("vlakno %d po bariere" % thread_id)
+    print("Thread %d is AFTER barrier" % thread_id)
 
 
-# priklad pouzitia ADT SimpleBarrier
-sb = SimpleBarrier(5)
-
-# doplnit kod, v ktorom sa vytvara a spusta 5 vlakien
-# ...
+if __name__ == "__main__":
+    THREADS = 10
+    sb = SimpleBarrier(THREADS)
+    threads = [Thread(barrier_example, sb, i) for i in range(THREADS)]
+    [t.join() for t in threads]
