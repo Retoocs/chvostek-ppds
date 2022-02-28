@@ -33,7 +33,7 @@ class SynchronizationHelper:
         self.numberOfThreads = n
         self.counter = 0
         self.indexCounter = 0
-        self.everyIsCreated = Semaphore(0)
+        self.everyIsCreated = Event()
         self.mutex = Mutex()
 
     def wait_for_creation(self):
