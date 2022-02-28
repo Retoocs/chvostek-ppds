@@ -80,7 +80,6 @@ if __name__ == "__main__":
     fib_seq = [0] * (THREADS + 2)
     fib_seq[1] = 1
 
-    counter = 0
     threads = [Thread(compute_fibonacci, helper, m) for i in range(THREADS)]
     [t.join() for t in threads]
 
