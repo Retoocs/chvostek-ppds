@@ -49,5 +49,7 @@ def compute_fibonacci(i):
 
 However this doesn't meet the condition, that it should compute after every thread is created. It might happen so or might not.
 
+*This idea is not mine. It was made by Roman Glváč.*
+
 ### What is the smallest number of synchronization objects used?
 In my main solution, which meets the assigment are total of 3 synchronization objects. In `Other solution no. 2` there is zero synchronization objects.
