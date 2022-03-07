@@ -9,12 +9,12 @@ We have a program, that illustrates **producent-consument** problem while multi-
 - count of producers
 - warehouse size
 - production time
-- warehouse insert time
+- warehouse insertion time
 - processing time
 - warehouse take time
 - total runtime
 
-Our goal is to optimize these parameters to achieve the most effective **production per second**.
+Our goal is to optimize these parameters to achieve the most effective **item production per second**.
 
 ## Our solution
 In our solution we mark as **variables** `count of producers` and `processing time`. Any other parameter we mark as a **constant**. 
