@@ -1,12 +1,33 @@
+"""
+Authors: Mgr. Ing. Matúš Jókay, PhD., Bc. Matej Chvostek
+University:  Slovak University of Technology in Bratislava
+Faculty: Faculty of Electrical Engineering and Information Technology
+Year: 2022
+License: MIT
+Assignment: https://uim.fei.stuba.sk/i-ppds/3-cvicenie-fibonacci-vypinac-p-k-c-z-%f0%9f%92%a1/?%2F
+"""
+
 from time import sleep
 from fei.ppds import Mutex, Semaphore, Thread, print
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 from matplotlib import cm
 
-
 class Shared(object):
+    """
+    Shared object by the threads.
+
+    Attributes:
+        free - signals the storage has free space
+        items - signals, that storage contains some item
+        pCounter - number of created items
+        itemCount - actual number of items in storage
+    """
     def __init__(self, N):
+        """
+        Constructor of class Shared
+        :param N: size of storage
+        """
         self.finished = False
         self.mutex = Mutex()
         self.free = Semaphore(N)
@@ -15,6 +36,13 @@ class Shared(object):
         self.itemCount = 0
 
 def producer(shared, productionTime, insertTime):
+    """
+    Simulates creation of item and insertion into storage
+    :param shared: synchronization helper
+    :param productionTime: time-length of item creation
+    :param insertTime: time-length of item insertion
+    :return: none
+    """
     while True:
         sleep(productionTime)
         shared.free.wait()
@@ -28,6 +56,13 @@ def producer(shared, productionTime, insertTime):
         shared.items.signal()
 
 def consumer(shared, processingTime, takeTime):
+    """
+    Simulates itme taking from the storage and item processing
+    :param shared: synchronization helper
+    :param processingTime: time-length of item processing
+    :param takeTime: time-length of taking item from storage
+    :return: none
+    """
     while True:
         shared.items.wait()
         if shared.finished:
@@ -40,6 +75,16 @@ def consumer(shared, processingTime, takeTime):
         sleep(processingTime)
 
 def plot_graph(x, y, z, xLabel, yLabel, zLabel):
+    """
+    Plots 3D graph
+    :param x: 1d array of x values
+    :param y: 1d array of y values
+    :param z: 1d array of z values
+    :param xLabel: x-axis label
+    :param yLabel: y-axis label
+    :param zLabel: z-axis label
+    :return: none
+    """
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.set_xlabel(xLabel)
@@ -57,6 +102,11 @@ def plot_graph(x, y, z, xLabel, yLabel, zLabel):
 
 
 def evaluate_graph1():
+    """
+    Core logic logic of system with the analysis. Creates configuration of system,
+    runs variable analysis on producent-consument logic.
+    :return: none
+    """
     x = []
     y = []
     z = []
@@ -64,15 +114,15 @@ def evaluate_graph1():
     # fixed params: CONSUMERS_COUNT, WAREHOUSE_SIZE, PRODUCTION_TIME, WAREHOUSE_INSERT_TIME, WAREHOUSE_TAKE_TIME, TOTAL_RUNTIME
     # variable params: (x)PRODUCERS_COUNT, (y)PROCESSING_TIME, (z)PCS_PER_SECOND
 
-    # PRODUCERS_COUNT = variable
+    # constants
     CONSUMERS_COUNT = 10
     WAREHOUSE_SIZE = 30
     PRODUCTION_TIME = 0.02
     WAREHOUSE_INSERT_TIME = 0.002
-    # PROCESSING_TIME = variable
     WAREHOUSE_TAKE_TIME = 0.002
     TOTAL_RUNTIME = 0.08
 
+    # variables
     producersCount = [1, 6, 11, 16, 21, 26, 31, 36, 41, 46]
     processingTimes = [0.005, 0.010, 0.015, 0.020, 0.025, 0.035, 0.040, 0.045, 0.050, 0.055]
 
@@ -82,7 +132,7 @@ def evaluate_graph1():
         for processingTime in processingTimes:
             sum_pcs = 0
             print(f"Iteration no. [{progressCounter}/{totalCombinations}]")
-            for _ in range(5):
+            for _ in range(10):
                 s = Shared(WAREHOUSE_SIZE)
                 c = [Thread(consumer, s, processingTime, WAREHOUSE_TAKE_TIME) for _ in range(CONSUMERS_COUNT)]
                 p = [Thread(producer, s, PRODUCTION_TIME, WAREHOUSE_INSERT_TIME) for _ in range(producerCount)]
@@ -96,7 +146,7 @@ def evaluate_graph1():
             print(f"x: {producerCount}; y: {processingTime}")
             print("..................................................")
             progressCounter += 1
-            pcsPerSecond = (sum_pcs / 5) / TOTAL_RUNTIME
+            pcsPerSecond = (sum_pcs / 10) / TOTAL_RUNTIME
             x.append(producerCount)
             y.append(processingTime)
             z.append(pcsPerSecond)
@@ -104,5 +154,8 @@ def evaluate_graph1():
 
 
 if __name__ == "__main__":
+    """
+    Entry point of the program. Calls the core function
+    """
     evaluate_graph1()
 
