@@ -18,6 +18,7 @@ def producer(shared):
         shared.mutex.lock()
         sleep(randint(1, 10) / 100)
         shared.mutex.unlock()
+        shared.free.signal(1)
         shared.items.signal()
 
 
