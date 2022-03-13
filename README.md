@@ -55,5 +55,49 @@ def monitor():
 ```
 
 ## Implementation
+Our implementation is pretty much the same as we have in **pseudocode**. We have added some printings and initializations. It works as we intended.
 
-## Conclusion
+Here's and example of **program output:**
+
+```
+Writing data... [T]
+Writing data... [P]
+Writing data... [H]
+monitor 05: number_of_reading_monitors=00, read_time=42 ms
+monitor 04: number_of_reading_monitors=01, read_time=41 ms
+monitor 07: number_of_reading_monitors=02, read_time=49 ms
+monitor 03: number_of_reading_monitors=03, read_time=44 ms
+monitor 02: number_of_reading_monitors=04, read_time=50 ms
+monitor 06: number_of_reading_monitors=05, read_time=50 ms
+monitor 00: number_of_reading_monitors=06, read_time=43 ms
+monitor 01: number_of_reading_monitors=07, read_time=41 ms
+monitor 04: number_of_reading_monitors=07, read_time=43 ms
+monitor 05: number_of_reading_monitors=07, read_time=43 ms
+monitor 00: number_of_reading_monitors=07, read_time=41 ms
+monitor 01: number_of_reading_monitors=07, read_time=47 ms
+monitor 03: number_of_reading_monitors=07, read_time=47 ms
+sensor P: number_of_writing_sensors=00, write_time=14 ms
+sensor H: number_of_writing_sensors=01, write_time=22 ms
+sensor T: number_of_writing_sensors=02, write_time=18 ms
+monitor 04: number_of_reading_monitors=00, read_time=48 ms
+monitor 02: number_of_reading_monitors=01, read_time=50 ms
+monitor 05: number_of_reading_monitors=02, read_time=44 ms
+monitor 00: number_of_reading_monitors=03, read_time=41 ms
+monitor 07: number_of_reading_monitors=04, read_time=43 ms
+monitor 06: number_of_reading_monitors=05, read_time=48 ms
+monitor 03: number_of_reading_monitors=06, read_time=41 ms
+monitor 01: number_of_reading_monitors=07, read_time=47 ms
+monitor 07: number_of_reading_monitors=07, read_time=46 ms
+monitor 05: number_of_reading_monitors=07, read_time=42 ms
+monitor 00: number_of_reading_monitors=07, read_time=47 ms
+sensor P: number_of_writing_sensors=00, write_time=13 ms
+sensor T: number_of_writing_sensors=01, write_time=11 ms
+sensor H: number_of_writing_sensors=02, write_time=25 ms
+monitor 04: number_of_reading_monitors=00, read_time=50 ms
+monitor 07: number_of_reading_monitors=01, read_time=49 ms
+monitor 06: number_of_reading_monitors=02, read_time=50 ms
+monitor 01: number_of_reading_monitors=04, read_time=50 ms
+```
+
+At the start, monitors wait until each sensor writes some data. Then monitors read data in instant loop, until higher prioritized process **sensor** takes in place. Number of readings between writings
+are not the same, because we have randomized time for write requests
