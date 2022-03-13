@@ -93,11 +93,11 @@ def monitor(monitorId, sh):
     while True:
         sh.turnstile.wait()
         sh.turnstile.signal()
-        numberOfReadingMonitors = sh.ls_sensor.lock(sh.accessData)
+        numberOfReadingMonitors = sh.ls_monitor.lock(sh.accessData)
         readTime = randint(40, 50) / 1000
         print("monitor %02d: number_of_reading_monitors=%02d, read_time=%02d ms" % (monitorId, numberOfReadingMonitors, readTime*1000))
         sleep(readTime)
-        sh.ls_sensor.unlock(sh.accessData)
+        sh.ls_monitor.unlock(sh.accessData)
 
 
 
@@ -119,13 +119,12 @@ def sensor(sh, minWait, maxWait, type):
     while True:
         sleep(randint(50, 60) / 1000)
         sh.turnstile.wait()
-        numberOfWritingSensors = sh.ls_monitor.lock(sh.accessData)
+        numberOfWritingSensors = sh.ls_sensor.lock(sh.accessData)
         sh.turnstile.signal()
         writeTime = randint(minWait, maxWait) / 1000
         print("sensor %s: number_of_writing_sensors=%02d, write_time=%02d ms" % (type, numberOfWritingSensors, writeTime*1000))
         sleep(writeTime)
-        sh.ls_monitor.unlock(sh.accessData)
-
+        sh.ls_sensor.unlock(sh.accessData)
 
 
 if __name__ == "__main__":
