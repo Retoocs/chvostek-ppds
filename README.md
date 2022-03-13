@@ -57,7 +57,7 @@ def monitor():
 ## Implementation
 Our implementation is pretty much the same as we have in **pseudocode**. We have added some printings and initializations. It works as we intended.
 
-Here's and example of **program output:**
+Here's an example of **program output:**
 
 ```
 Writing data... [T]
