@@ -1,3 +1,12 @@
+"""
+Authors: Mgr. Ing. Matúš Jókay, PhD., Bc. Matej Chvostek
+University:  Slovak University of Technology in Bratislava
+Faculty: Faculty of Electrical Engineering and Information Technology
+Year: 2022
+License: MIT
+Assignment: https://uim.fei.stuba.sk/i-ppds/4-cvicenie-vecerajuci-filozofi-atomova-elektraren-%f0%9f%8d%bd%ef%b8%8f/
+"""
+
 from random import randint
 from time import sleep
 from fei.ppds import Mutex, Semaphore, Event, Thread, print
