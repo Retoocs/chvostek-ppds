@@ -71,3 +71,49 @@ def main():
     for cook_id in [0, 1, 2, ..., C-1]:
         create_and_run_thread(cook, cook_id)
 ```
+
+## Implementation
+Our implementation is pretty much the same as we have in pseudocode. We have added some printings and initializations. It works as we intended.
+
+Here's an example of **program output** *(savages=3, pot-capacity=2, cooks=5)*:
+```
+savage  0: portions left in pot:  0
+savage  0: waking up cooks
+cook    0: cooking
+cook    1: cooking
+cook    2: cooking
+cook    3: cooking
+cook    4: cooking
+cook    2: inserting portions
+savage  0: taking a portion
+savage  0: eating
+savage  1: portions left in pot:  1
+savage  1: taking a portion
+savage  1: eating
+savage  2: portions left in pot:  0
+savage  2: waking up cooks
+cook    4: cooking
+cook    2: cooking
+cook    1: cooking
+cook    3: cooking
+cook    0: cooking
+cook    2: inserting portions
+savage  2: taking a portion
+savage  2: eating
+savage  2: portions left in pot:  1
+savage  2: taking a portion
+savage  2: eating
+savage  0: portions left in pot:  0
+savage  0: waking up cooks
+cook    3: cooking
+cook    4: cooking
+cook    1: cooking
+cook    0: cooking
+cook    2: cooking
+cook    1: inserting portions
+savage  0: taking a portion
+...
+```
+
+At the start pot is empty. First savage wakes up cooks. Every cook cooks and only one of them puts the portions into the pot. Then a savage, who waits, takes a portion. Then other savages take portions
+until the pot is empty again.
