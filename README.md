@@ -14,9 +14,9 @@ selects that coroutine, whom **identifier** is the closest to generated number. 
 from the scheduler and prints it.
 
 So the selection is as follows:
-- *coroutine* with `id=2` can receive [`1, 2, 3`].
-- *coroutine* with `id=5` can receive [`4, 5, 6`].
-- *coroutine* with `id=8` can receive [`7, 8, 9`].
+- *coroutine* with `id=2` is selected when the number is: `1, 2 or 3`.
+- *coroutine* with `id=5` is selected when the number is: `4, 5 or 6`.
+- *coroutine* with `id=8` is selected when the number is: `7, 8 or 9`.
 
 Program stops when the **sum** of the generated numbers is more than **60**.
 
